@@ -25,8 +25,8 @@ data class User (
     constructor(id: String) : this(id, firstName = "John", lastName = "Doe")
 
     init {
-        println("It's Alive!!!\n" +
-                "${if(lastName==="Doe") "His name is $firstName $lastName" else "And his name is $firstName $lastName!!!"}\n")
+//        println("It's Alive!!!\n" +
+//                "${if(lastName==="Doe") "His name is $firstName $lastName" else "And his name is $firstName $lastName!!!"}\n")
     }
 
     companion object Factory {
