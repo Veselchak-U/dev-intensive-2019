@@ -13,7 +13,10 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+
+    fun plural(value:Int) : String = "$value " + declinationOfTime(value.toLong(), this)
+
 }
 
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy") : String {
