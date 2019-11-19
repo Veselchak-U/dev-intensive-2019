@@ -36,58 +36,58 @@ enum class TimeUnits {
 
 fun Date.humanizeDiff(date: Date = Date()): String {
     var diffTime : Long = date.time - this.time
-    val pastTime : Boolean = diffTime > 0
+    val isPastTime : Boolean = diffTime > 0
     var text = ""
 
     diffTime = abs(diffTime)
     text = when (diffTime) {
-        in  0*SECOND..1*SECOND ->  "только что"
-        in  1*SECOND..45*SECOND -> if (pastTime) "несколько секунд назад"
+        in  0*SECOND..1*SECOND -> "только что"
+        in  1*SECOND..45*SECOND -> if (isPastTime) "несколько секунд назад"
                                    else "через несколько секунд"
-        in 45*SECOND..75*SECOND -> if (pastTime) "минуту назад"
+        in 45*SECOND..75*SECOND -> if (isPastTime) "минуту назад"
                                    else "через минуту"
-        in 75*SECOND..45*MINUTE -> if (pastTime)   "${diffTime / MINUTE} " + declinationOfTime(diffTime / MINUTE, TimeUnits.MINUTE) + " назад"
+        in 75*SECOND..45*MINUTE -> if (isPastTime) "${diffTime / MINUTE} " + declinationOfTime(diffTime / MINUTE, TimeUnits.MINUTE) + " назад"
                                    else "через " + "${diffTime / MINUTE} " + declinationOfTime(diffTime / MINUTE, TimeUnits.MINUTE)
-        in 45*MINUTE..75*MINUTE -> if (pastTime) "час назад"
+        in 45*MINUTE..75*MINUTE -> if (isPastTime) "час назад"
                                    else "через час"
-        in 75*MINUTE..22* HOUR ->  if (pastTime)   "${diffTime / HOUR} " + declinationOfTime(diffTime / HOUR, TimeUnits.HOUR) + " назад"
-                                   else "через " + "${diffTime / HOUR} " + declinationOfTime(diffTime / HOUR, TimeUnits.HOUR)
-        in 22*HOUR..26*HOUR ->     if (pastTime) "день назад"
-                                   else "через день"
-        in 26*HOUR..360*DAY ->     if (pastTime)   "${diffTime / DAY} " + declinationOfTime(diffTime / DAY, TimeUnits.DAY) + " назад"
-                                   else "через " + "${diffTime / DAY} " + declinationOfTime(diffTime / DAY, TimeUnits.DAY)
-        else -> if(pastTime) "более года назад"
+        in 75*MINUTE..22* HOUR -> if (isPastTime) "${diffTime / HOUR} " + declinationOfTime(diffTime / HOUR, TimeUnits.HOUR) + " назад"
+                                  else "через " + "${diffTime / HOUR} " + declinationOfTime(diffTime / HOUR, TimeUnits.HOUR)
+        in 22*HOUR..26*HOUR -> if (isPastTime) "день назад"
+                               else "через день"
+        in 26*HOUR..360*DAY -> if (isPastTime) "${diffTime / DAY} " + declinationOfTime(diffTime / DAY, TimeUnits.DAY) + " назад"
+                               else "через " + "${diffTime / DAY} " + declinationOfTime(diffTime / DAY, TimeUnits.DAY)
+        else -> if (isPastTime) "более года назад"
                 else "более чем через год"
     }
     return text
 }
 
-fun declinationOfTime(value: Long, unit: TimeUnits): String {
+fun declinationOfTime(value: Long, unit: TimeUnits) : String {
     val absValue = abs(value)
     var text = ""
 
     if (absValue in 11..19)
-        text = when(unit) {
+        text = when (unit) {
             TimeUnits.SECOND -> "секунд"
             TimeUnits.MINUTE -> "минут"
             TimeUnits.HOUR -> "часов"
             TimeUnits.DAY -> "дней"
         }
     else if (absValue % 10 == 1L)
-        text = when(unit) {
+        text = when (unit) {
             TimeUnits.SECOND -> "секунду"
             TimeUnits.MINUTE -> "минуту"
             TimeUnits.HOUR -> "час"
             TimeUnits.DAY -> "день"
         }
-    else if(absValue % 10 in 2..4)
-        text = when(unit) {
+    else if (absValue % 10 in 2..4)
+        text = when (unit) {
             TimeUnits.SECOND -> "секунды"
             TimeUnits.MINUTE -> "минуты"
             TimeUnits.HOUR -> "часа"
             TimeUnits.DAY -> "дня"
         }
-    else text = when(unit) {
+    else text = when (unit) {
             TimeUnits.SECOND -> "секунд"
             TimeUnits.MINUTE -> "минут"
             TimeUnits.HOUR -> "часов"
