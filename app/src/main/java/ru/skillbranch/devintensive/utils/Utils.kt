@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.utils
 
+import java.util.*
+
 object Utils {
 
     fun parseFullName(fullName: String?) : Pair<String?, String?> {
@@ -19,8 +21,20 @@ object Utils {
         return "not implement"
     }
 
-    fun toInitials(firstName: String?, lastName: String?): String {
-        //TODO implement
-        return "not implement"
+    fun toInitials(firstName: String?, lastName: String?): String? {
+        var firstInitial : String = ""
+        var secondInitial : String = ""
+        var text : String? = ""
+
+        firstInitial = firstName?.trim() ?: ""
+        if (firstInitial.isNotEmpty())
+            text = firstInitial.substring(0, 1).toUpperCase(Locale("ru"))
+
+        secondInitial = lastName?.trim() ?: ""
+        if (secondInitial.isNotEmpty())
+            text += secondInitial.substring(0, 1).toUpperCase(Locale("ru"))
+
+        if (text == "") return null
+        else return text
     }
 }
