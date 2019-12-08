@@ -13,7 +13,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String) : Pair<String, Triple<Int, Int, Int>> {
-        var answerToCase: String
+        val answerToCase: String
 
         if(question == Question.NAME) {
             answerToCase = answer
@@ -26,7 +26,12 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             "Отлично - ты справился\n${question.question}" to status.color
         }else{
             status = status.nextStatus()
-            "Это неправильный ответ!\n${question.question}" to status.color
+            if(status == Status.NORMAL) {
+                question = Question.NAME
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+            } else {
+                "Это неправильный ответ\n${question.question}" to status.color
+            }
         }
 
     }
