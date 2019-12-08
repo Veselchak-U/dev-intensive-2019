@@ -13,9 +13,17 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String) : Pair<String, Triple<Int, Int, Int>> {
-        return if (question.answers.contains(answer)){
+        var answerToCase: String
+
+        if(question == Question.NAME) {
+            answerToCase = answer
+        } else {
+            answerToCase = answer.toLowerCase()
+        }
+
+        return if (question.answers.contains(answerToCase)){
             question = question.nextQuestion()
-            "Отлично! Это правильный ответ!\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         }else{
             status = status.nextStatus()
             "Это неправильный ответ!\n${question.question}" to status.color
@@ -27,7 +35,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         NORMAL(Triple(255, 255, 255)),
         WARNING(Triple(255, 120, 0)),
         DANGER(Triple(255, 60, 60)),
-        CRITICAL(Triple(255, 255, 0));
+        CRITICAL(Triple(255, 0, 0));
 
         fun nextStatus(): Status {
             return if(this.ordinal < values().lastIndex) {
@@ -39,11 +47,11 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     enum class Question(val question: String, val answers: List<String>) {
-        NAME("Как меня зовут?", listOf("bender","бендер")) {
+        NAME("Как меня зовут?", listOf("Bender","Бендер")) {
             override fun nextQuestion() = PROFESSION
 
         },
-        PROFESSION("Назови мою профессию.", listOf("bender","сгибальщик")) {
+        PROFESSION("Назови мою профессию?", listOf("bender","сгибальщик")) {
             override fun nextQuestion() = MATERIAL
 
         },
@@ -59,7 +67,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion() = IDLE
 
         },
-        IDLE("На этом всё, пока вопросов нет.", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion() = IDLE
 
         };
