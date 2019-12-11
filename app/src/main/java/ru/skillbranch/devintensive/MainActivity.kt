@@ -11,9 +11,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.extensions.hideKeyboard
+import ru.skillbranch.devintensive.extensions.isKeyboardClosed
+import ru.skillbranch.devintensive.extensions.isKeyboardOpen
 import ru.skillbranch.devintensive.models.Bender
 
 
@@ -85,6 +88,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OnEditorActionLi
     }
 
     override fun onClick(v: View?) {
+
+//        Toast.makeText(applicationContext,
+//            "${isKeyboardOpen().toString()} ${isKeyboardClosed().toString()}",
+//            Toast.LENGTH_LONG).show()
+
         if(v?.id == R.id.iv_send) {
             val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
             messageEt.setText("")
