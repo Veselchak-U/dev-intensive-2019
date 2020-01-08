@@ -50,11 +50,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
 
     <TextView
         android:id="@+id/textView"
-        style="@style/Profile.Header.NickName"
+        style="@style/Profile.Header.Nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

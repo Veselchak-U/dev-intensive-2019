@@ -116,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
             val icon = if(isEdit) {
                 resources.getDrawable(R.drawable.ic_save_black_24dp, theme)
             } else {
-                resources.getDrawable(R.drawable.ic_mode_edit_black_24dp, theme)
+                resources.getDrawable(R.drawable.ic_edit_black_24dp, theme)
             }
 
             background.colorFilter = filter
