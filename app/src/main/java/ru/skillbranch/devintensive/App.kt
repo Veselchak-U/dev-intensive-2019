@@ -8,7 +8,7 @@ import ru.skillbranch.devintensive.repositories.PreferencesRepository
 class App : Application() {
 
     companion object {
-        private var instance:App? = null
+        private var instance : App? = null
 
         fun applicationContext() : Context {
             return instance!!.applicationContext

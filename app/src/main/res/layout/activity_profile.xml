@@ -33,6 +33,7 @@
                 android:layout_toLeftOf="@id/iv_avatar"
                 android:background="@drawable/btn_round_bg"
                 android:src="@drawable/ic_switch_day_night" />
+
             <ImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="@dimen/avatar_round_size"
@@ -56,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv_avatar"
                 android:layout_centerHorizontal="true"
-                android:text="John Doe" />
+                android:text="John Doe"/>
             <TextView
                 style="@style/Profile.Header.Rank"
                 android:id="@+id/tv_rank"

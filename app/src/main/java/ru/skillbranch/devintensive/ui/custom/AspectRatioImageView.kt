@@ -8,7 +8,7 @@ import ru.skillbranch.devintensive.R
 class AspectRatioImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int =0
+    defStyleAttr: Int = 0
 ) : ImageView(context, attrs, defStyleAttr) {
 
     companion object  {

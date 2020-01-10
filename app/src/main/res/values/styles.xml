@@ -1,9 +1,10 @@
 <resources>
 
-
+    <style name="AppTheme.Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 
     <style name="Profile">
-
     </style>
 
     <style name="Profile.EditText" parent="Profile">
