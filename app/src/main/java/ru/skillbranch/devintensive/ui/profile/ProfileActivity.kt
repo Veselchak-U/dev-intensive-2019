@@ -4,6 +4,8 @@ import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 
@@ -24,8 +27,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: ProfileViewModel
-    var isEditMode = false
     lateinit var viewFields : Map<String, TextView>
+    var isEditMode = false
+    var isBadRepoUrl = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -33,7 +37,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
-        ininViewModel()
+        initViewModel()
         Log.d("M_ProfileActivity","onCreate")
     }
 
@@ -42,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         outState?.putBoolean(IS_EDIT_MODE, isEditMode)
     }
 
-    private fun ininViewModel() {
+    private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
@@ -85,6 +89,54 @@ class ProfileActivity : AppCompatActivity() {
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
+
+        // Validate repository URL
+        et_repository.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty() && !isValidGitUrl(s.toString())) {
+                    wr_repository.error = "Невалидный адрес репозитория"
+                    isBadRepoUrl = true
+                } else {
+                    wr_repository.error = null
+                    isBadRepoUrl = false
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+    }
+
+    private fun isValidGitUrl(url: String): Boolean {
+        val userName = Utils.transliteration("${et_first_name.text}${et_last_name.text}", "").toLowerCase()
+        val lowerUrl = url.toLowerCase()
+
+        return when (lowerUrl) {
+            "github.com/$userName" -> true
+            "www.github.com/$userName" -> true
+            "https://github.com/$userName" -> true
+            "https://www.github.com/$userName" -> true
+            else -> false
+        }
+
+//        enterprise
+//        features
+//        topics
+//        collections
+//        trending
+//        events
+//        marketplace
+//        pricing
+//        nonprofit
+//        customer-stories
+//        security
+//        login
+//        join
+
     }
 
     private fun showCurrentMode(isEdit: Boolean) {
@@ -130,7 +182,7 @@ class ProfileActivity : AppCompatActivity() {
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
-            repository = et_repository.text.toString()
+            repository = if (isBadRepoUrl) "" else et_repository.text.toString()
         ).apply {
             viewModel.saveProfileData(this)
         }
