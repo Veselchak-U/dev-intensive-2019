@@ -27,18 +27,19 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: ProfileViewModel
-    lateinit var viewFields : Map<String, TextView>
+    lateinit var viewFields: Map<String, TextView>
     var isEditMode = false
     var isBadRepoUrl = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // restore default theme after splash screen
         setTheme(R.style.AppTheme)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
-        Log.d("M_ProfileActivity","onCreate")
+        Log.d("M_ProfileActivity", "onCreate")
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -53,13 +54,13 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateTheme(mode: Int) {
-        Log.d("M_ProfileActivity","updateTheme")
+        Log.d("M_ProfileActivity", "updateTheme")
         delegate.setLocalNightMode(mode)
     }
 
     private fun updateUI(profile: Profile) {
         profile.toMap().also {
-            for ((k,v) in viewFields) {
+            for ((k, v) in viewFields) {
                 v.text = it[k].toString()
             }
         }
@@ -81,7 +82,7 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
-            if(isEditMode) saveProfileInfo()
+            if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
@@ -112,7 +113,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun isValidGitUrl(url: String): Boolean {
-        val userName = Utils.transliteration("${et_first_name.text}${et_last_name.text}", "").toLowerCase()
+        val userName =
+            Utils.transliteration("${et_first_name.text}${et_last_name.text}", "").toLowerCase()
         val lowerUrl = url.toLowerCase()
 
         return when (lowerUrl) {
@@ -141,22 +143,22 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showCurrentMode(isEdit: Boolean) {
         val info = viewFields.filter {
-            setOf("firstName", "lastName", "about",  "repository").contains(it.key)
+            setOf("firstName", "lastName", "about", "repository").contains(it.key)
         }
 
-        for ((_,v) in info) {
+        for ((_, v) in info) {
             v as EditText
             v.isFocusable = isEdit
             v.isFocusableInTouchMode = isEdit
             v.isEnabled = isEdit
-            v.background.alpha = if(isEdit) 255 else 0
+            v.background.alpha = if (isEdit) 255 else 0
         }
 
-        ic_eye.visibility = if(isEdit) View.GONE else View.VISIBLE
+        ic_eye.visibility = if (isEdit) View.GONE else View.VISIBLE
         wr_about.isCounterEnabled = isEdit
 
         with(btn_edit) {
-            val filter : ColorFilter? = if(isEdit) {
+            val filter: ColorFilter? = if (isEdit) {
                 PorterDuffColorFilter(
                     resources.getColor(R.color.color_accent, theme),
                     PorterDuff.Mode.SRC_IN
@@ -165,7 +167,7 @@ class ProfileActivity : AppCompatActivity() {
                 null
             }
 
-            val icon = if(isEdit) {
+            val icon = if (isEdit) {
                 resources.getDrawable(R.drawable.ic_save_black_24dp, theme)
             } else {
                 resources.getDrawable(R.drawable.ic_edit_black_24dp, theme)
