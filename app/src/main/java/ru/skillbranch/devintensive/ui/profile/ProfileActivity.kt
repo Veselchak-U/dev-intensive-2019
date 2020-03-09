@@ -1,10 +1,11 @@
 package ru.skillbranch.devintensive.ui.profile
 
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextPaint
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+import kotlin.math.abs
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -28,8 +30,8 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ProfileViewModel
     lateinit var viewFields: Map<String, TextView>
-    var isEditMode = false
-    var isBadRepoUrl = false
+    private var isEditMode = false
+    private var isBadRepoUrl = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // restore default theme after splash screen
@@ -51,6 +53,18 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
+
+        // Select user avatar image if it not defined in activity
+        if (iv_avatar.drawable == null) {
+            var profileFromViewModel = viewModel.getProfileData().value
+            var initials =
+                Utils.toInitials(profileFromViewModel?.firstName, profileFromViewModel?.lastName)
+            if (initials != "") {
+                iv_avatar.setImageDrawable(createDrawableText(initials))
+            } else {
+                iv_avatar.setImageResource(R.drawable.avatar_default)
+            }
+        }
     }
 
     private fun updateTheme(mode: Int) {
@@ -110,6 +124,33 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
 
+
+    }
+
+    private fun createDrawableText(initials: String): Drawable? {
+        val height = resources.getDimension(R.dimen.avatar_round_size)
+        val width = resources.getDimension(R.dimen.avatar_round_size)
+
+        val bitmap = Bitmap.createBitmap(height.toInt(), width.toInt(), Bitmap.Config.ARGB_8888)
+
+        val textPaint = TextPaint()
+        textPaint.color = Color.WHITE
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.textSize = height / 2 // In px
+        textPaint.typeface = Typeface.DEFAULT
+        textPaint.isAntiAlias = true
+
+        val c = Canvas()
+        c.setBitmap(bitmap)
+        val paint = Paint()
+        paint.color = resources.getColor(R.color.color_accent, theme)
+        c.drawCircle(width / 2, height / 2, height / 2, paint)
+
+        val textBounds = Rect()
+        textPaint.getTextBounds(initials, 0, initials.length, textBounds)
+        c.drawText(initials, width / 2, height / 2 + abs(textBounds.exactCenterY()), textPaint)
+
+        return BitmapDrawable(resources, bitmap)
     }
 
     private fun isValidGitUrl(url: String): Boolean {

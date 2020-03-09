@@ -1,6 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
-fun String.truncate(value: Int = 16) : String {
+fun String.truncate(value: Int = 16): String {
     val filler : String = "..."
     var text : String = ""
 
@@ -14,7 +14,7 @@ fun String.truncate(value: Int = 16) : String {
     }
 }
 
-fun String.stripHtml() : String {
+fun String.stripHtml(): String {
     var text : String = ""
 
     text = this.replace("<.*?>".toRegex(), "") // replace words kind of <tag>

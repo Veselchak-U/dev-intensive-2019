@@ -19,7 +19,7 @@ object Utils {
     fun transliteration(payload: String, divider: String = " "): String {
         var text : String = ""
 
-        payload.forEach {c: Char ->
+        payload.trim().forEach {c: Char ->
             text += when (c.toString()) {
                 " " -> divider
                 "а" -> "a"
@@ -94,10 +94,10 @@ object Utils {
         return text
     }
 
-    fun toInitials(firstName: String?, lastName: String?): String? {
+    fun toInitials(firstName: String?, lastName: String?): String {
         var firstInitial : String = ""
         var secondInitial : String = ""
-        var text : String? = ""
+        var text : String = ""
 
         firstInitial = firstName?.trim() ?: ""
         if (firstInitial.isNotEmpty())
@@ -107,7 +107,7 @@ object Utils {
         if (secondInitial.isNotEmpty())
             text += secondInitial.substring(0, 1).toUpperCase(Locale("ru"))
 
-        if (text == "") return null
+        if (text == "") return ""
         else return text
     }
 }

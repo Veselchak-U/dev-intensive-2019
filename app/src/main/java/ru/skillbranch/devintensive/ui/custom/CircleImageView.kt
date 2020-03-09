@@ -16,7 +16,6 @@ class CircleImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-
 ) : ImageView(context, attrs, defStyleAttr) {
 
     companion object {
@@ -41,18 +40,21 @@ class CircleImageView @JvmOverloads constructor(
 
             circlePaint.color = borderColor
 
-            // Checking for available the picture
+            // Checking for a property "src"
             val srcId = attrs.getAttributeResourceValue(
                 "http://schemas.android.com/apk/res/android", "src", -1
             )
-            val drawable = AppCompatResources.getDrawable(context, srcId)
-            if (drawable != null) {
-                isBitmap = true
-                avaBitmap = drawable.toBitmap()
-                // Use default (don't-resized) shader
-//        avaBitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar_default)
-                val shader = BitmapShader(avaBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-                avaPaint.shader = shader
+            if (srcId != -1) {
+                // Checking for available the picture
+                val drawable = AppCompatResources.getDrawable(context, srcId)
+                if (drawable != null) {
+                    avaBitmap = drawable.toBitmap()
+                    // Here we don't know the actual size of the view,
+                    // so we use a non-scalable image
+                    avaPaint.shader =
+                        BitmapShader(avaBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+                    isBitmap = true
+                }
             }
         }
     }

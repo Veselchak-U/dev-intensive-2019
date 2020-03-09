@@ -19,12 +19,12 @@ enum class TimeUnits {
 
 }
 
-fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy") : String {
+fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
     return dateFormat.format(this)
 }
 
-fun Date.add(value:Int, units: TimeUnits = TimeUnits.SECOND) : Date {
+fun Date.add(value:Int, units: TimeUnits = TimeUnits.SECOND): Date {
     var time = this.time
 
     time += when(units) {
@@ -65,7 +65,7 @@ fun Date.humanizeDiff(date: Date = Date()): String {
     return text
 }
 
-fun declinationOfTime(value: Long, unit: TimeUnits) : String {
+fun declinationOfTime(value: Long, unit: TimeUnits): String {
     val absValue = abs(value)
     var text = ""
 
