@@ -2,6 +2,8 @@ package ru.skillbranch.devintensive.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -42,12 +44,18 @@ class MainActivity : AppCompatActivity() {
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter) {
-            viewModel.addToArchive(it.id)
-            Snackbar.make(
+            val chatItem = it
+            viewModel.addToArchive(chatItem.id)
+            val snackbar = Snackbar.make(
                 rv_chat_list,
-                "Are you sure to move ${it.title} to archive?",
+                "Переместить ${chatItem.title} в архив?",
                 Snackbar.LENGTH_LONG
-            ).show()
+            )
+            snackbar.setAction("Отмена") {
+                viewModel.restoreFromArchive(chatItem.id)
+                Snackbar.make(rv_chat_list, "Архивирование чата отменено", Snackbar.LENGTH_SHORT).show()
+            }
+            snackbar.show()
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)
