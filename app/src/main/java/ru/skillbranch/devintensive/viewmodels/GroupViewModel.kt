@@ -27,7 +27,6 @@ class GroupViewModel : ViewModel() {
 
         result.addSource(userItems) { filterF.invoke() }
         result.addSource(query) { filterF.invoke() }
-
         return result
     }
 

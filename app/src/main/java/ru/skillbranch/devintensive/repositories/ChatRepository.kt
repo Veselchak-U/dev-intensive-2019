@@ -4,13 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import ru.skillbranch.devintensive.data.managers.CacheManager
 import ru.skillbranch.devintensive.models.data.Chat
 import ru.skillbranch.devintensive.models.data.ChatItem
+import ru.skillbranch.devintensive.utils.DataGenerator
 
 object ChatRepository {
     private val chats = CacheManager.loadChats()
 
-    fun loadChats() : MutableLiveData<List<Chat>> {
-        return chats
-    }
+    fun loadChats(): MutableLiveData<List<Chat>> = chats
 
     fun update(chat: Chat) {
         val copy = chats.value!!.toMutableList()
