@@ -1,6 +1,5 @@
 package ru.skillbranch.devintensive.models.data
 
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import ru.skillbranch.devintensive.extensions.shortFormat
 import ru.skillbranch.devintensive.models.BaseMessage
@@ -26,6 +25,13 @@ data class Chat(
     fun lastMessageDate(): Date? {
         var lastMessage = messages.lastOrNull()
         return lastMessage?.date
+    }
+
+    fun lastMessageAuthor(): String? {
+        var lastMessage = messages.lastOrNull()
+        var result = lastMessage?.from?.firstName ?: "" + " " + lastMessage?.from?.lastName ?: ""
+//        return "${lastMessage?.from?.firstName ?: ""} ${lastMessage?.from?.lastName}"
+        return result.trim()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -70,7 +76,8 @@ data class Chat(
 enum class ChatType {
     SINGLE,
     GROUP,
-    ARCHIVE
+    ARCHIVE,
+    ARCHIVE_GROUP
 }
 
 
