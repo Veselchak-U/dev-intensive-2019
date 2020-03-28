@@ -1,7 +1,10 @@
 package ru.skillbranch.devintensive.ui.main
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +34,19 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
         initViews()
         initViewModel()
+        checkInternetConnection()
+    }
+
+    private fun checkInternetConnection() {
+        val manager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = manager.activeNetworkInfo
+
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected == true) {
+            Log.d("M_MainActivity","There is the Internet")
+        } else {
+            Log.d("M_MainActivity","NO Internet")
+        }
     }
 
     private fun initToolbar() {

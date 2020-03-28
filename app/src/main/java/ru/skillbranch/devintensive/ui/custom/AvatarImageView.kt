@@ -26,7 +26,7 @@ class AvatarImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ImageView(context, attrs, defStyleAttr), View.OnLongClickListener {
+) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr), View.OnLongClickListener {
 
     companion object {
         private const val DEFAULT_BORDER_WIDTH = 2

@@ -38,7 +38,7 @@ class ArchiveActivity : AppCompatActivity() {
     private fun initViews() {
 
         archiveChatAdapter = ChatAdapter {
-                Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
 
         val touchCallback = ChatItemTouchHelperCallback(archiveChatAdapter) {
@@ -51,7 +51,11 @@ class ArchiveActivity : AppCompatActivity() {
             )
             snackbar.setAction("Отмена") {
                 viewModel.addToArchive(chatItem.id)
-                Snackbar.make(rv_archive_list, "Восстановление чата отменено", Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                        rv_archive_list,
+                        "Восстановление чата отменено",
+                        Snackbar.LENGTH_SHORT
+                    )
                     .show()
             }
             snackbar.show()
