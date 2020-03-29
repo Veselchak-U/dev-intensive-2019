@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.addToArchive(chatItem.id)
             val snackbar = Snackbar.make(
                 rv_chat_list,
-                "Переместить ${chatItem.title} в архив?",
+                "Вы точно хотите добавить ${chatItem.title} в архив?",
                 Snackbar.LENGTH_LONG
             )
             snackbar.setAction("Отмена") {

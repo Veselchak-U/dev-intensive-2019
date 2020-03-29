@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,6 +32,7 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
         private const val ARCHIVE_GROUP_TYPE = 3
     }
 
+//    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var items: List<ChatItem> = listOf()
 
     override fun getItemViewType(position: Int): Int = when (items[position].chatType) {
