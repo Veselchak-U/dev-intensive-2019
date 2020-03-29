@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
-import ru.skillbranch.devintensive.models.data.Profile
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 import kotlin.math.abs
@@ -51,20 +50,20 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        viewModel.getProfileData().observe(this, Observer { updateUI(it) })
+//        viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
 
         // Select user avatar image if it not defined in activity
-        if (iv_avatar.drawable == null) {
-            var profileFromViewModel = viewModel.getProfileData().value
-            var initials =
-                Utils.toInitials(profileFromViewModel?.firstName, profileFromViewModel?.lastName)
-            if (initials != "") {
-                iv_avatar.setImageDrawable(createDrawableText(initials))
-            } else {
-                iv_avatar.setImageResource(R.drawable.avatar_default)
-            }
-        }
+//        if (iv_avatar.drawable == null) {
+//            var profileFromViewModel = viewModel.getProfileData().value
+//            var initials =
+//                Utils.toInitials(profileFromViewModel?.firstName, profileFromViewModel?.lastName)
+//            if (initials != "") {
+//                iv_avatar.setImageDrawable(createDrawableText(initials))
+//            } else {
+//                iv_avatar.setImageResource(R.drawable.avatar_default)
+//            }
+//        }
     }
 
     private fun updateTheme(mode: Int) {
@@ -72,13 +71,13 @@ class ProfileActivity : AppCompatActivity() {
         delegate.setLocalNightMode(mode)
     }
 
-    private fun updateUI(profile: Profile) {
-        profile.toMap().also {
-            for ((k, v) in viewFields) {
-                v.text = it[k].toString()
-            }
-        }
-    }
+//    private fun updateUI(profile: Profile) {
+//        profile.toMap().also {
+//            for ((k, v) in viewFields) {
+//                v.text = it[k].toString()
+//            }
+//        }
+//    }
 
     private fun initViews(savedInstanceState: Bundle?) {
         viewFields = mapOf(
@@ -96,7 +95,7 @@ class ProfileActivity : AppCompatActivity() {
         showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
-            if (isEditMode) saveProfileInfo()
+//            if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
@@ -220,16 +219,16 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun saveProfileInfo() {
-        Profile(
-            firstName = et_first_name.text.toString(),
-            lastName = et_last_name.text.toString(),
-            about = et_about.text.toString(),
-            repository = if (isBadRepoUrl) "" else et_repository.text.toString()
-        ).apply {
-            viewModel.saveProfileData(this)
-        }
-    }
+//    private fun saveProfileInfo() {
+//        Profile(
+//            firstName = et_first_name.text.toString(),
+//            lastName = et_last_name.text.toString(),
+//            about = et_about.text.toString(),
+//            repository = if (isBadRepoUrl) "" else et_repository.text.toString()
+//        ).apply {
+//            viewModel.saveProfileData(this)
+//        }
+//    }
 
 }
 
