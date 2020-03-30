@@ -37,24 +37,11 @@ class MainActivity : AppCompatActivity() {
         checkInternetConnection()
     }
 
-    private fun checkInternetConnection() {
-        val manager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = manager.activeNetworkInfo
-
-        if (activeNetworkInfo != null && activeNetworkInfo.isConnected == true) {
-            Log.d("M_MainActivity","There is the Internet")
-        } else {
-            Log.d("M_MainActivity","NO Internet")
-        }
-    }
-
     private fun initToolbar() {
         setSupportActionBar(toolbar)
     }
 
     private fun initViews() {
-
         chatAdapter = ChatAdapter {
             if (it.chatType == ChatType.ARCHIVE_GROUP) {
                 val intent = Intent(this, ArchiveActivity::class.java)
@@ -82,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)
-
 
         with(rv_chat_list) {
             adapter = chatAdapter
@@ -118,5 +104,17 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun checkInternetConnection() {
+        val manager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = manager.activeNetworkInfo
+
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected == true) {
+            Log.d("M_MainActivity", "There is the Internet")
+        } else {
+            Log.d("M_MainActivity", "NO Internet")
+        }
     }
 }
