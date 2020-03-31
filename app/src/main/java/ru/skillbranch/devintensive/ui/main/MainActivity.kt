@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         chatAdapter = ChatAdapter {
-            if (it.chatType == ChatType.ARCHIVE_GROUP) {
+//            if (it.chatType == ChatType.ARCHIVE_GROUP) {
+            if (it.chatType == ChatType.ARCHIVE) {
                 val intent = Intent(this, ArchiveActivity::class.java)
                 startActivity(intent)
             } else {

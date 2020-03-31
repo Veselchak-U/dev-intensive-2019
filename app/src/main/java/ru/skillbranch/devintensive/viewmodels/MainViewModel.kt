@@ -57,7 +57,7 @@ class MainViewModel : ViewModel() {
                 messageCount,
                 lastDate,
                 false,
-                ChatType.ARCHIVE_GROUP,
+                ChatType.ARCHIVE,
                 lastAuthor
             )
             result.add(chatItem)

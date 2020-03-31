@@ -29,7 +29,7 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
         private const val ARCHIVE_TYPE = 0
         private const val SINGLE_TYPE = 1
         private const val GROUP_TYPE = 2
-        private const val ARCHIVE_GROUP_TYPE = 3
+//        private const val ARCHIVE_GROUP_TYPE = 3
     }
 
 //    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -39,7 +39,7 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
         ChatType.ARCHIVE -> ARCHIVE_TYPE
         ChatType.SINGLE -> SINGLE_TYPE
         ChatType.GROUP -> GROUP_TYPE
-        ChatType.ARCHIVE_GROUP -> ARCHIVE_GROUP_TYPE
+//        ChatType.ARCHIVE_GROUP -> ARCHIVE_GROUP_TYPE
     }
 
     abstract inner class ChatItemViewHolder(convertView: View) :
@@ -166,7 +166,7 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
                 )
             )
             GROUP_TYPE -> GroupViewHolder(inflater.inflate(R.layout.item_chat_group, parent, false))
-            ARCHIVE_GROUP_TYPE -> ArchiveViewHolder(inflater.inflate(R.layout.item_chat_archive, parent, false))
+            ARCHIVE_TYPE -> ArchiveViewHolder(inflater.inflate(R.layout.item_chat_archive, parent, false))
             else -> SingleViewHolder(inflater.inflate(R.layout.item_chat_single, parent, false))
         }
 

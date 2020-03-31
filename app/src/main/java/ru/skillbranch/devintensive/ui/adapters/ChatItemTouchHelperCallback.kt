@@ -41,7 +41,9 @@ class ChatItemTouchHelperCallback(
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val chatItem = adapter.items[viewHolder.adapterPosition]
-        if (chatItem.chatType != ChatType.ARCHIVE_GROUP ) {
+//        val adapterType = adapter.getItemViewType()
+//        if (chatItem.chatType != ChatType.ARCHIVE_GROUP ) {
+        if (chatItem.chatType != ChatType.ARCHIVE ) {
             swipeListener.invoke(chatItem)
         }
     }

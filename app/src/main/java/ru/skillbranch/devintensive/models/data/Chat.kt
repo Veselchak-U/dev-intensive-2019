@@ -76,8 +76,8 @@ data class Chat(
 enum class ChatType {
     SINGLE,
     GROUP,
-    ARCHIVE,
-    ARCHIVE_GROUP
+    ARCHIVE/*,
+    ARCHIVE_GROUP*/
 }
 
 
